@@ -7,7 +7,7 @@ namespace FinalDMG {
 
     class FileHelper {
     public:
-        static void readBios(uint8_t* pBios);
+        static void loadBootstrap(uint8_t* pDest);
     private:
     };
 

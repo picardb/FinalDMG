@@ -9,11 +9,20 @@ namespace FinalDMG
 {
     namespace ConsoleHelper
     {
-        std::string ByteToHexStr(uint8_t byte)
+        std::string UInt8ToHexStr(uint8_t value)
         {
             std::stringstream ss;
             ss << std::hex;
-            ss << setw(2) << setfill('0') << (int)byte;
+            ss << setw(2) << setfill('0') << (int)value;
+
+            return ss.str();
+        }
+
+        std::string UInt16ToHexStr(uint16_t value)
+        {
+            std::stringstream ss;
+            ss << std::hex;
+            ss << setw(4) << setfill('0') << (int)value;
 
             return ss.str();
         }

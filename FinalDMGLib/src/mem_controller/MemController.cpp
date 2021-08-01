@@ -16,6 +16,9 @@ namespace FinalDMG
         if (address < ADDRESS_CART_START) {
             return m_bootstrapRom[address];
         }
+        else {
+            return 0;
+        }
     }
 
     void MemController::writeByte(uint16_t address, uint8_t value)
@@ -27,8 +30,9 @@ namespace FinalDMG
 
     void MemController::readBlock(uint16_t address, int length, uint8_t* pDest) const
     {
-        if (address < ADDRESS_CART_START) {
-            memcpy(pDest, m_bootstrapRom, length);
+        for (int i = 0; i < length; i++) {
+            pDest[i] = readByte(address);
+            address++;
         }
     }
 }

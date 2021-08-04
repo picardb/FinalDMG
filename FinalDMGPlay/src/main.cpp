@@ -16,10 +16,17 @@ int main(void) {
 
     Emulator emul;
 
-    emul.runForCycles(1);
+    int cycleCount = 0;
+    while (emul.getCpuRegPc() != 0x13) {
+        emul.runForCycles(1);
+        cycleCount++;
+    }
 
     printCpuInfo(emul);
     printMemInfo(emul);
+    cout << "Cycle count: " << cycleCount << endl;
+
+    system("pause");
 }
 
 static void printHelloMessage(void)

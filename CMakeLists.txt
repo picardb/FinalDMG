@@ -21,4 +21,5 @@ endfunction(assign_source_group)
 add_subdirectory(FinalDMGLib)
 add_subdirectory(FinalDMGPlay)
 add_subdirectory(FinalDMGTest)
+add_subdirectory(HelperLib)
 

@@ -2,7 +2,7 @@
 #define FINAL_DMG_BOOTSTRAP_ROM_
 
 #include "bus/BusDevice.h"
-#include "helpers/FileHelper.h"
+#include "File.h"
 
 #include <memory>
 #include <array>

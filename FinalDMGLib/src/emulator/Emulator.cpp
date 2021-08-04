@@ -4,13 +4,13 @@ using namespace std;
 
 namespace FinalDMG {
     Emulator::Emulator() :
-        m_bus(make_shared<Bus>()),
-        m_cpu(make_shared<Cpu>()),
-        m_bootstrapRom(make_shared<BootstrapRom>())
+        m_bus(make_unique<Bus>()),
+        m_cpu(make_unique<Cpu>()),
+        m_bootstrapRom(make_unique<BootstrapRom>())
     {
-        m_bus->connectCpu(m_cpu);
-        m_cpu->connectBus(m_bus);
-        m_bus->connectBootstrapRom(m_bootstrapRom);
+        m_bus->connectCpu(m_cpu.get());
+        m_cpu->connectBus(m_bus.get());
+        m_bus->connectBootstrapRom(m_bootstrapRom.get());
         m_bootstrapRom->loadFomFile("bootstrap.bin");
     }
 

@@ -54,6 +54,7 @@ namespace FinalDMG {
                 hi(_hi), lo(_lo)
             { }
 
+            Reg16_t& operator=(const Reg16_t reg) { hi = reg.hi; lo = reg.lo; return *this; }
             Reg16_t& operator=(const uint16_t value) { HelperLib::Bitwise16::split(value, hi, lo); return *this; }
             Reg16_t& operator++() { *this = uint16_t(*this) + 1; return *this; }
             Reg16_t operator++(int) { Reg16_t temp = *this; ++*this; return temp; }
@@ -83,14 +84,27 @@ namespace FinalDMG {
         // 8-bit loads
         void instrLdReg8Imm(Reg8 reg);
         void instrLdReg8Reg8(Reg8 dest, Reg8 src);
-        void instrLdReg8MemInd(Reg8 regVal, Reg16 regAddr);
+        void instrLdReg8MemInd(Reg8 dest, Reg16 regAddr);
+        void instrLddReg8MemInd(Reg8 dest, Reg16 regAddr);
+        void instrLdiReg8MemInd(Reg8 dest, Reg16 regAddr);
+        void instrLdReg8MemDir(Reg8 reg);
+        void instrLdReg8PeriphInd(Reg8 regVal, Reg8 regOffset);
+        void instrLdReg8PeriphImm(Reg8 dest);
         void instrLdMemReg8Ind(Reg16 regAddr, Reg8 regVal);
         void instrLddMemReg8Ind(Reg16 regAddr, Reg8 regVal);
         void instrLdiMemReg8Ind(Reg16 regAddr, Reg8 regVal);
         void instrLdMemImmInd(Reg16 regAddr);
+        void instrLdMemReg8Dir(Reg8 reg);
+        void instrLdPeriphReg8Ind(Reg8 regOffset, Reg8 regVal);
+        void instrLdPeriphReg8Imm(Reg8 src);
 
         // 16-bit loads
         void instrLdReg16Imm(Reg16 reg);
+        void instrLdReg16Reg16(Reg16 dest, Reg16 src);
+        void instrLdReg16Reg16Offset(Reg16 dest, Reg16 src);
+        void instrLdMemReg16Dir(Reg16 src);
+        void instrPush(Reg16 reg);
+        void instrPop(Reg16 reg);
 
         // 8-bit ALU
         void instrXor8(Reg8 reg);

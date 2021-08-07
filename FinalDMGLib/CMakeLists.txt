@@ -5,7 +5,12 @@ set(SRC_DIR src)
 set(SRCS
     ${SRC_DIR}/bus/Bus.cpp
     ${SRC_DIR}/cpu/Cpu.cpp
-    ${SRC_DIR}/cpu/CpuInstr.cpp
+    ${SRC_DIR}/cpu/CpuInstrAlu8.cpp
+    ${SRC_DIR}/cpu/CpuInstrExtended.cpp
+    ${SRC_DIR}/cpu/CpuInstrJumps.cpp
+    ${SRC_DIR}/cpu/CpuInstrLd8.cpp
+    ${SRC_DIR}/cpu/CpuInstrLd16.cpp
+    ${SRC_DIR}/cpu/CpuInstrMisc.cpp
     ${SRC_DIR}/emulator/Emulator.cpp
     ${SRC_DIR}/memory/BootstrapRom.cpp
 )

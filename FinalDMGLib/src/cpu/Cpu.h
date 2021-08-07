@@ -107,7 +107,26 @@ namespace FinalDMG {
         void instrPop(Reg16 reg);
 
         // 8-bit ALU
-        void instrXor8(Reg8 reg);
+        void instrAdd8Reg8(Reg8 reg, bool withCarry = false);
+        void instrAdd8Imm(bool withCarry = false);
+        void instrAdd8MemInd(Reg16 regAddr, bool withCarry = false);
+        void instrSub8Reg8(Reg8 reg, bool withCarry = false);
+        void instrSub8Imm(bool withCarry = false);
+        void instrSub8MemInd(Reg16 regAddr, bool withCarry = false);
+        void instrAnd8Reg8(Reg8 reg);
+        void instrAnd8Imm(void);
+        void instrAnd8MemInd(Reg16 regAddr);
+        void instrOr8Reg8(Reg8 reg);
+        void instrOr8Imm(void);
+        void instrOr8MemInd(Reg16 regAddr);
+        void instrXor8Reg8(Reg8 reg);
+        void instrXor8Imm(void);
+        void instrXor8MemInd(Reg16 regAddr);
+        void instrCp8Reg8(Reg8 reg);
+        void instrCp8Imm(void);
+        void instrCp8MemInd(Reg16 regAddr);
+        void instrInc8Reg8(Reg8 reg);
+        void instrInc8MemInd(Reg16 regAddr);
 
         // Jumps
         void instrJrCond(Condition condition);
@@ -115,6 +134,12 @@ namespace FinalDMG {
         // Extended instruction
         void instrExtended(void);
         void instrBit(int dest, int index);
+
+        // Carries utility
+        bool setCarryOnAdd8(uint8_t left, uint8_t right, bool inCarry);
+        bool setHalfCarryOnAdd8(uint8_t left, uint8_t right, bool inCarry);
+        bool setCarryOnSub8(uint8_t left, uint8_t right, bool inCarry);
+        bool setHalfCarryOnSub8(uint8_t left, uint8_t right, bool inCarry);
     };
 
 }

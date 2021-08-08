@@ -127,13 +127,37 @@ namespace FinalDMG {
         void instrCp8MemInd(Reg16 regAddr);
         void instrInc8Reg8(Reg8 reg);
         void instrInc8MemInd(Reg16 regAddr);
+        void instrDec8Reg8(Reg8 reg);
+        void instrDec8MemInd(Reg16 regAddr);
+
+        // 16-bit ALU
+        void instrAddHlReg16(Reg16 reg);
+        void instrAddSpImm(void);
+        void instrIncReg16(Reg16 reg);
+        void instrDecReg16(Reg16 reg);
 
         // Jumps
+        void instrJp(void);
+        void instrJpCond(Condition condition);
+        void instrJpHl(void);
+        void instrJr(void);
         void instrJrCond(Condition condition);
+        void instrCall(void);
+        void instrCallCond(Condition condition);
 
         // Extended instruction
         void instrExtended(void);
+        void instrRlc(int dest);
+        void instrRrc(int dest);
+        void instrRl(int dest);
+        void instrRr(int dest);
+        void instrSla(int dest);
+        void instrSra(int dest);
+        void instrSwap(int dest);
+        void instrSrl(int dest);
         void instrBit(int dest, int index);
+        void instrSet(int dest, int index);
+        void instrRes(int dest, int index);
 
         // Carries utility
         bool setCarryOnAdd8(uint8_t left, uint8_t right, bool inCarry);

@@ -278,6 +278,33 @@ namespace FinalDMG
         else { resetFlag(FLAG_Z); }
         resetFlag(FLAG_N);
     }
+    
+    void Cpu::instrDec8Reg8(Reg8 reg) {
+        m_remainingCycles = 4;
+
+        if (setHalfCarryOnSub8(m_regs8[reg], 1, false)) { setFlag(FLAG_H); }
+        else { resetFlag(FLAG_H); }
+
+        m_regs8[reg]--;
+
+        if (m_regs8[reg] == 0) { setFlag(FLAG_Z); }
+        else { resetFlag(FLAG_Z); }
+        setFlag(FLAG_N);
+    }
+    void Cpu::instrDec8MemInd(Reg16 regAddr) {
+        m_remainingCycles = 12;
+
+        uint8_t memVal = m_bus->read(m_regs16[regAddr]);
+        if (setHalfCarryOnSub8(memVal, 1, false)) { setFlag(FLAG_H); }
+        else { resetFlag(FLAG_H); }
+
+        memVal--;
+        m_bus->write(m_regs16[regAddr], memVal);
+
+        if (memVal == 0) { setFlag(FLAG_Z); }
+        else { resetFlag(FLAG_Z); }
+        setFlag(FLAG_N);
+    }
 
     bool Cpu::setCarryOnAdd8(uint8_t left, uint8_t right, bool inCarry) {
         uint16_t carryVal;

@@ -5,6 +5,7 @@
 #include "memory/BootstrapRom.h"
 
 #include <memory>
+#include <cstdint>
 
 namespace FinalDMG {
 

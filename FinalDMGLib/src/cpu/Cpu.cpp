@@ -6,6 +6,7 @@ namespace FinalDMG
 
     void Cpu::step(void) {
         if (m_remainingCycles == 0) {
+            processInterrupts();
             fetchNextInstruction();
             executeInstruction();
         }
@@ -249,4 +250,28 @@ namespace FinalDMG
         }
     }
 
+    void Cpu::processInterrupts(void) {
+        InterruptController::Irq pendingInterrupt = m_irq.getNextPendingInterrupt();
+
+        if (pendingInterrupt == InterruptController::IRQ_NONE) {
+            return;
+        }
+
+        uint16_t jumpAddress;
+        switch (pendingInterrupt) {
+        case InterruptController::IRQ_VBLANK: jumpAddress = 0x0040; break;
+        case InterruptController::IRQ_LCDC: jumpAddress = 0x0048; break;
+        case InterruptController::IRQ_TIMER: jumpAddress = 0x0050; break;
+        case InterruptController::IRQ_SERIAL: jumpAddress = 0x0058; break;
+        case InterruptController::IRQ_PAD: jumpAddress = 0x0060; break;
+        default: jumpAddress = 0; break;
+        }
+
+        m_bus->write(m_regs16[REG16_SP], m_regs16[REG16_PC].hi);
+        m_regs16[REG16_SP]--;
+        m_bus->write(m_regs16[REG16_SP], m_regs16[REG16_PC].lo);
+        m_regs16[REG16_SP]--;
+
+        m_regs16[REG16_PC] = jumpAddress;
+    }
 }

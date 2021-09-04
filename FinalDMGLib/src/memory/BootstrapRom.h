@@ -7,6 +7,7 @@
 #include <memory>
 #include <array>
 #include <string>
+#include <cstdint>
 
 namespace FinalDMG {
 

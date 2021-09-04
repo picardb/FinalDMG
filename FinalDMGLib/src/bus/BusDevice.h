@@ -2,6 +2,7 @@
 #define FINAL_DMG_BUS_DEVICE_
 
 #include <memory>
+#include <cstdint>
 
 namespace FinalDMG
 {

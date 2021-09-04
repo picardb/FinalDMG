@@ -6,6 +6,7 @@
 #include "memory/BootstrapRom.h"
 
 #include <memory>
+#include <cstdint>
 
 namespace FinalDMG
 {
@@ -15,13 +16,8 @@ namespace FinalDMG
     public:
         Emulator();
 
-        uint8_t getCpuReg8(Cpu::Reg8 reg) const { return m_cpu->getReg8(reg); }
-        uint16_t getCpuRegPc(void) const { return m_cpu->getReg16(Cpu::REG16_PC); }
-        uint16_t getCpuRegSp(void) const { return m_cpu->getReg16(Cpu::REG16_SP); }
-        uint8_t getCpuOpcode(void) const { return m_cpu->getOpcode(); }
-        uint8_t getCpuRemainingCycles(void) const { return m_cpu->getRemainingCycles(); }
-        uint8_t busRead(uint16_t address) const { return m_bus->read(address); }
-        void busWrite(uint16_t address, uint8_t value) { m_bus->write(address, value); }
+        Bus* bus(void) const { return m_bus.get(); }
+        Cpu* cpu(void) const { return m_cpu.get(); }
 
         void runForCycles(int cycles);
 

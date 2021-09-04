@@ -1,11 +1,13 @@
 #ifndef FINAL_DMG_CPU_
 #define FINAL_DMG_CPU_
 
-#include <bus/BusDevice.h>
+#include "bus/BusDevice.h"
+#include "interrupt_controller/InterruptController.h"
 
 #include <memory>
 #include <array>
 #include <functional>
+#include <cstdint>
 
 #include "Bitwise8.h"
 #include "Bitwise16.h"
@@ -30,14 +32,22 @@ namespace FinalDMG {
                        Reg16_t(m_regSpHi, m_regSpLo) },
             m_opcode(0),
             m_params{ 0, 0 },
-            m_remainingCycles(0)
+            m_remainingCycles(0),
+            m_irq()
         { }
 
         void step(void);
 
+        //CpuState getState(void) const;
+        //void setState(const CpuState& state);
+
         void setReg8(Reg8 reg, uint8_t val) { m_regs8[reg] = val; }
         void setFlag(Flag flag) { HelperLib::Bitwise8::setBit(m_regs8[REG8_F], flag); }
         void resetFlag(Flag flag) { HelperLib::Bitwise8::resetBit(m_regs8[REG8_F], flag); }
+        void raiseInterrupt(InterruptController::Irq irq) { m_irq.raiseInterrupt(irq); }
+        void clearInterrupt(InterruptController::Irq irq) { m_irq.clearInterrupt(irq); }
+        void enableInterrupt(InterruptController::Irq irq) { m_irq.enableInterrupt(irq); }
+        void disableInterrupt(InterruptController::Irq irq) { m_irq.disableInterrupt(irq); }
 
         uint8_t getReg8(Reg8 reg) const { return m_regs8[reg]; }
         uint16_t getReg16(Reg16 reg) const { return uint16_t(m_regs16[reg]); }
@@ -73,10 +83,12 @@ namespace FinalDMG {
         uint8_t                  m_opcode;
         std::array<uint8_t, 2>   m_params;
         int                      m_remainingCycles; // Remaining cycles until next instrution
+        InterruptController      m_irq;
 
         void fetchNextInstruction();
         void executeInstruction();
         void fetchParams(int count);
+        void processInterrupts(void);
 
         // Misc
         void instrNop(void);
@@ -164,6 +176,21 @@ namespace FinalDMG {
         bool setHalfCarryOnAdd8(uint8_t left, uint8_t right, bool inCarry);
         bool setCarryOnSub8(uint8_t left, uint8_t right, bool inCarry);
         bool setHalfCarryOnSub8(uint8_t left, uint8_t right, bool inCarry);
+    };
+
+    struct CpuState
+    {
+        uint8_t m_regA = 0;
+        uint8_t m_regF = 0;
+        uint8_t m_regB = 0;
+        uint8_t m_regC = 0;
+        uint8_t m_regD = 0;
+        uint8_t m_regE = 0;
+        uint8_t m_regH = 0;
+        uint8_t m_regL = 0;
+        uint16_t m_regPc = 0;
+        uint16_t m_regSp = 0;
+        InterruptControllerState m_irqState;
     };
 
 }
